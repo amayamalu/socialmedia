@@ -35,5 +35,6 @@ urlpatterns = [
     path('profiles/all/',views.ProfileListView.as_view(),name="profile-list"),
     path('profiles/<int:pk>/follow/',views.follow_view,name="follow"),
     path('profiles/<int:pk>/unfollow/',views.unfollow_view,name="unfollow"),
+    path('profiles/<int:pk>/post/remove/',views.post_delete_view,name="post-remove"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

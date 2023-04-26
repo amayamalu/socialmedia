@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from random import sample
 
 # Create your models here.
 class UserProfile(models.Model):
@@ -15,12 +16,21 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-    
+
+
+
+
+
+
+
     @property
     def friend_request(self):
         all_profiles=UserProfile.objects.all().exclude(user=self.user)
         following_profile=self.following.all()
         suggestions=set(all_profiles) - set(following_profile)
+
+        if len(suggestions)>2:
+            return sample(list(suggestions),2)
         return suggestions
     
 class Posts(models.Model):
@@ -44,7 +54,7 @@ class Comments(models.Model):
 
 
 
-#django signals  post_save,pre_post,post_delete,pre_post
+#django signals  post_save,pre_post,post_delete,pre_post -----automatoically userprofile created when a user login
 
 
 def created_profile(sender,instance,created,**kwargs):
